@@ -66,12 +66,17 @@ public class DOM {
 			DocumentBuilder builder = builderfac.newDocumentBuilder();
 			document = builder.parse(new File("src\\customerOrders.xml"));
 			
-			/* Frage 1:  Wie viele Kunden und wie viele Bestellungen sind gespeichert? */
 			NodeList c = document.getElementsByTagName("Customer"); // Von Customers die Liste speichern
 			NodeList ord = document.getElementsByTagName("Order"); // Die Liste der Orders Speicherm
+			
+			/* Frage 2: Welche CustomerID besitzt der vierte Kunde? */
+			System.out.println("CustomerID des 4ten Kunden ist: " + c.item(3).getAttributes().getNamedItem("CustomerID").getNodeValue()); // Ausgabe des 4. Kunden
+			
+			/* Frage 1:  Wie viele Kunden und wie viele Bestellungen sind gespeichert? */
 			System.out.println("Anzahl der Kunden: " + c.getLength()); // Ausgabe der Anzahl der Kunden
 			System.out.println("Anzahl der Bestellungen: " + ord.getLength());// Ausgabe der Anzahl der Bestellungen
 
+			
 		} catch (SAXParseException e) {
 			e.printStackTrace();
 		} catch (SAXException e) {
