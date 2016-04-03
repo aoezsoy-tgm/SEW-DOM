@@ -73,6 +73,9 @@ public class DOM {
 			NodeList pho = document.getElementsByTagName("Phone"); // Speichern einer Liste der Phone Tags
 			boolean phone;
 			
+			NodeList usa = document.getElementsByTagName("Country"); // Die Liste des Countrys speichern
+			boolean cusa;
+			
 			/* Frage 2: Welche CustomerID besitzt der vierte Kunde? */
 			System.out.println("CustomerID des 4ten Kunden ist: " + c.item(3).getAttributes().getNamedItem("CustomerID").getNodeValue()); // Ausgabe des 4. Kunden
 			
@@ -94,14 +97,14 @@ public class DOM {
 			}
 			
 			/* Frage 4: Gibt es Kunden, welche dieselbe dreistellige Vorwahl verwenden? */
-			for (int i = 0, size = pho.getLength(); i < size; i++) {
-				
+			for (int i = 0, size = pho.getLength(); i < size; i++) 
+			{
 				Node num = pho.item(i);
 				num.toString().substring(0, 4);
 				Node num2 = pho.item(i++);
 				num2.toString().substring(0, 4);
 				/*
-				 * Inhalt der beiden Strings vergleichen
+				 * Inhalt vergleichen
 				 */
 				if (num.equals(num2)) {
 					phone =! false;
@@ -116,6 +119,24 @@ public class DOM {
 				System.out.println("Es gibt KEINE Kunden mit der selben Vorwahl!");
 			}
 			
+			/* Frage 5: Gibt es Kunden, die nicht aus den USA sind? Selbe Überlegung wie vorher*/
+			for(int i = 0, size = usa.getLength(); i < size; i++) 
+			{
+				Node adressusa = usa.item(i);
+				
+				if(adressusa.getTextContent().equals("USA"))
+				{
+					cusa = true;
+				} else {
+					cusa = false;
+				}
+			}
+			if( cusa =! false)
+			{
+				System.out.println("Kunden sind aus den USA!");
+			} else {
+				System.out.println("Kunden sind NICHT aus den USA!");
+			}
 			
 		} catch (SAXParseException e) {
 			e.printStackTrace();
