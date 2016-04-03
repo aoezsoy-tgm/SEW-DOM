@@ -66,8 +66,11 @@ public class DOM {
 			DocumentBuilder builder = builderfac.newDocumentBuilder();
 			document = builder.parse(new File("src\\customerOrders.xml"));
 			
+			//NodeLists
 			NodeList c = document.getElementsByTagName("Customer"); // Von Customers die Liste speichern
 			NodeList ord = document.getElementsByTagName("Order"); // Die Liste der Orders Speicherm
+			NodeList lazyK = document.getElementsByTagName("FullAddress").item(2).getChildNodes(); // Speichern der Kinder des Letzten Kindes vom Customer Lazy K
+			
 			
 			/* Frage 2: Welche CustomerID besitzt der vierte Kunde? */
 			System.out.println("CustomerID des 4ten Kunden ist: " + c.item(3).getAttributes().getNamedItem("CustomerID").getNodeValue()); // Ausgabe des 4. Kunden
@@ -75,7 +78,20 @@ public class DOM {
 			/* Frage 1:  Wie viele Kunden und wie viele Bestellungen sind gespeichert? */
 			System.out.println("Anzahl der Kunden: " + c.getLength()); // Ausgabe der Anzahl der Kunden
 			System.out.println("Anzahl der Bestellungen: " + ord.getLength());// Ausgabe der Anzahl der Bestellungen
-
+			
+			/* Frage 3: Wie lautet die vollständige Adresse von der Firma Lazy K Kountry Store? */
+			System.out.println("Addresse von Lazy K: ");
+			
+			/* 	Einzelne Nodes aus der NodeList holen
+				Text der Node speichern
+				Node Ausgeben 
+			*/
+			for (int i = 0, size = lazyK.getLength(); i < size; i++) {
+				Node adr = lazyK.item(i);
+				String tmp = adr.getTextContent();
+				System.out.println(tmp);
+			}
+			
 			
 		} catch (SAXParseException e) {
 			e.printStackTrace();
