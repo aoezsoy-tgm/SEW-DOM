@@ -76,6 +76,7 @@ public class DOM {
 			NodeList usa = document.getElementsByTagName("Country"); // Die Liste des Countrys speichern
 			boolean cusa;
 			
+			int kunde1 = 0, kunde2 = 0, kunde3 = 0, kunde4 = 0; // Initialisierung der Kunden mit dem Wert 0
 			/* Frage 2: Welche CustomerID besitzt der vierte Kunde? */
 			System.out.println("CustomerID des 4ten Kunden ist: " + c.item(3).getAttributes().getNamedItem("CustomerID").getNodeValue()); // Ausgabe des 4. Kunden
 			
@@ -90,7 +91,8 @@ public class DOM {
 				Text der Node speichern
 				Node Ausgeben 
 			*/
-			for (int i = 0, size = lazyK.getLength(); i < size; i++) {
+			for (int i = 0, size = lazyK.getLength(); i < size; i++) 
+			{
 				Node adr = lazyK.item(i);
 				String tmp = adr.getTextContent();
 				System.out.println(tmp);
@@ -106,9 +108,11 @@ public class DOM {
 				/*
 				 * Inhalt vergleichen
 				 */
-				if (num.equals(num2)) {
+				if (num.equals(num2)) 
+				{
 					phone =! false;
-				} else {
+				} else 
+				{
 					phone =! true;
 				}
 			}
@@ -127,16 +131,55 @@ public class DOM {
 				if(adressusa.getTextContent().equals("USA"))
 				{
 					cusa = true;
-				} else {
+				} else 
+				{
 					cusa = false;
 				}
 			}
 			if( cusa =! false)
 			{
 				System.out.println("Kunden sind aus den USA!");
-			} else {
+			} else 
+			{
 				System.out.println("Kunden sind NICHT aus den USA!");
 			}
+			
+			/* Frage 6: Welche(r) Kunde(n ) hatte(n ) die meisten Bestellungen? */
+			/* Es werden zuerst 4 ints mit dem Wert 0 initalisiert, und wenn der
+			 * Firmenname mit den Strings übereinstimmen, dann wird es um eine 
+			 * Zahl(Kunde) erhöht. (spriche kunde 1,2,3,4).*/
+			for (int i = 0, size = ord.getLength(); i < size; i++) {
+		        Node order = ord.item(i).getChildNodes().item(1);
+		        String inhalt = order.getTextContent();
+		        
+		        if (inhalt.equals("HUNGC")) 
+		        {
+		        	kunde1++;
+		        } else if (inhalt.equals("LAZYK")) 
+		        {
+		        	kunde2++;
+		        } else if (inhalt.equals("LETSS")) 
+		        {
+		        	kunde3++;
+		        } else if (inhalt.equals("GREAL")) 
+		        {
+		        	kunde4++;
+		        }
+		      }
+			/* Vergleichen der ints und es wird der Kunde mit der höchsten Anzahl der Bestellungen ausgegeben. */
+		    if ((kunde1 >= kunde2) && (kunde1 >= kunde3) && (kunde1 >= kunde4)) 
+		    {
+		        System.out.println("Der Kunde HUNGC hatte mit " + kunde1 + " Bestellungen die höchste Anzahl!");
+		      } else if ((kunde2 >= kunde3) && (kunde2 >= kunde4)) 
+		      {
+		        System.out.println("Der Kunde LAZYK hatte mit " + kunde2 + " Bestellungen die höchste Anzahl!");
+		      } else if ((kunde3 >= kunde4)) 
+		      {
+		        System.out.println("Der Kunde LETSS hatte mit " + kunde3 + " Bestellungen die höchste Anzahl!");
+		      } else 
+		      {
+		        System.out.println("Der Kunde GREAL hatte mit " + kunde4 + " Bestellungen die höchste Anzahl!");
+		      }
 			
 		} catch (SAXParseException e) {
 			e.printStackTrace();
