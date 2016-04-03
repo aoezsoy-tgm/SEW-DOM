@@ -70,7 +70,8 @@ public class DOM {
 			NodeList c = document.getElementsByTagName("Customer"); // Von Customers die Liste speichern
 			NodeList ord = document.getElementsByTagName("Order"); // Die Liste der Orders Speicherm
 			NodeList lazyK = document.getElementsByTagName("FullAddress").item(2).getChildNodes(); // Speichern der Kinder des Letzten Kindes vom Customer Lazy K
-			
+			NodeList pho = document.getElementsByTagName("Phone"); // Speichern einer Liste der Phone Tags
+			boolean phone;
 			
 			/* Frage 2: Welche CustomerID besitzt der vierte Kunde? */
 			System.out.println("CustomerID des 4ten Kunden ist: " + c.item(3).getAttributes().getNamedItem("CustomerID").getNodeValue()); // Ausgabe des 4. Kunden
@@ -90,6 +91,29 @@ public class DOM {
 				Node adr = lazyK.item(i);
 				String tmp = adr.getTextContent();
 				System.out.println(tmp);
+			}
+			
+			/* Frage 4: Gibt es Kunden, welche dieselbe dreistellige Vorwahl verwenden? */
+			for (int i = 0, size = pho.getLength(); i < size; i++) {
+				
+				Node num = pho.item(i);
+				num.toString().substring(0, 4);
+				Node num2 = pho.item(i++);
+				num2.toString().substring(0, 4);
+				/*
+				 * Inhalt der beiden Strings vergleichen
+				 */
+				if (num.equals(num2)) {
+					phone =! false;
+				} else {
+					phone =! true;
+				}
+			}
+			// Ausgabe
+			if (phone =! false) {
+				System.out.println("Es gibt Kunden mit der selben Vorwahl!");
+			} else {
+				System.out.println("Es gibt KEINE Kunden mit der selben Vorwahl!");
 			}
 			
 			
