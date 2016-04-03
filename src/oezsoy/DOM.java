@@ -60,9 +60,12 @@ public class DOM {
 	 * @param args
 	 */
 	public static void main(String args[]) {
+		
 		Document document = null;
 		DocumentBuilderFactory builderfac = DocumentBuilderFactory.newInstance();
-		try {
+		
+		try 
+		{
 			DocumentBuilder builder = builderfac.newDocumentBuilder();
 			document = builder.parse(new File("src\\customerOrders.xml"));
 			
@@ -77,6 +80,8 @@ public class DOM {
 			boolean cusa;
 			
 			int kunde1 = 0, kunde2 = 0, kunde3 = 0, kunde4 = 0; // Initialisierung der Kunden mit dem Wert 0
+			
+			 
 			/* Frage 2: Welche CustomerID besitzt der vierte Kunde? */
 			System.out.println("CustomerID des 4ten Kunden ist: " + c.item(3).getAttributes().getNamedItem("CustomerID").getNodeValue()); // Ausgabe des 4. Kunden
 			
@@ -117,9 +122,11 @@ public class DOM {
 				}
 			}
 			// Ausgabe
-			if (phone =! false) {
+			if (phone =! false) 
+			{
 				System.out.println("Es gibt Kunden mit der selben Vorwahl!");
-			} else {
+			} else 
+			{
 				System.out.println("Es gibt KEINE Kunden mit der selben Vorwahl!");
 			}
 			
@@ -180,15 +187,46 @@ public class DOM {
 		      {
 		        System.out.println("Der Kunde GREAL hatte mit " + kunde4 + " Bestellungen die höchste Anzahl!");
 		      }
-			
-		} catch (SAXParseException e) {
-			e.printStackTrace();
-		} catch (SAXException e) {
-			e.printStackTrace();
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		    
+		    /* Füge außerdem jedem Kunden über DOM das Kindelement "language" hinzu, 
+		     * welches ein Attribut value mit dem Wert "en" besitzt (sofern noch nicht vorhanden) 
+		     * und speichere das Dokument. */
+		      
+		    Element language = document.createElement("language"); // Language
+		    
+		    /* Eine Schleife, dass zum Einfügen der Node in jedem Kunden dient. */
+		    for (int i = 0, size = c.getLength(); i < size; i++) 
+		    {
+		        ord.item(i).appendChild(language);
+		    }
+		    DOMSource src = new DOMSource(document); // Vorbereiten zum Speichern
+		    StreamResult lsg = new StreamResult(new File("AUSGABE.xml")); // Ausgabe-Kanal festlegen
+		    TransformerFactory tFactory = TransformerFactory.newInstance(); // Mit Hilfe der factory kann ein Transformer geholt werden!
+		    
+		    try 
+		    {
+		       Transformer transformer = tFactory.newTransformer(); // Laden des Transformers
+		       transformer.transform(src, lsg); // Speichern der vorbereiteten Daten im Ausgabe-Kanal!
+		    } catch (TransformerConfigurationException e) {
+		    	e.printStackTrace();
+		        
+		    } catch (TransformerException e) {
+		    	  e.printStackTrace();
+		    }
+		      
+		    } catch (SAXParseException e) {
+		    	  e.printStackTrace();
+		      
+		    } catch (SAXException e) {
+		    	  e.printStackTrace();
+		      
+		    } catch (ParserConfigurationException e) {
+		    	  e.printStackTrace();
+		      
+		    } catch (IOException e) {
+		    	  e.printStackTrace();
+		    	  System.out.println("Bitte geben sie den richtigen Pfad ein!!!");
+		    }
 	}
 }
+		
